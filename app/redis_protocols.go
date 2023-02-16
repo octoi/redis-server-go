@@ -21,7 +21,7 @@ type Value struct {
 	array []Value
 }
 
-func (v Value) string() string {
+func (v Value) String() string {
 	if v.typ == BulkString || v.typ == SimpleString {
 		return string(v.bytes)
 	}
@@ -45,12 +45,12 @@ func DecodeRESP(byteStream *bufio.Reader) (Value, error) {
 	}
 
 	switch string(dataTypeByte) {
-	    case "+":
-	        return decodeSimpleString(byteStream)
-	    case "$":
-	        return decodeBulkString(byteStream)
-	    case "*":
-	        return decodeArray(byteStream)
+	case "+":
+		return decodeSimpleString(byteStream)
+	case "$":
+		return decodeBulkString(byteStream)
+	case "*":
+		return decodeArray(byteStream)
 	}
 
 	return Value{}, fmt.Errorf("invalid RESP data type byte: %s", string(dataTypeByte))
@@ -58,13 +58,13 @@ func DecodeRESP(byteStream *bufio.Reader) (Value, error) {
 
 func decodeSimpleString(byteStream *bufio.Reader) (Value, error) {
 	readBytes, err := readUntilCRLF(byteStream)
-	
+
 	if err != nil {
 		return Value{}, err
 	}
 
 	return Value{
-		typ: SimpleString,
+		typ:   SimpleString,
 		bytes: readBytes,
 	}, nil
 }
@@ -82,14 +82,14 @@ func decodeBulkString(byteStream *bufio.Reader) (Value, error) {
 		return Value{}, fmt.Errorf("failed to parse bulk string length: %s", err)
 	}
 
-	readBytes := make([]byte, count + 2)
+	readBytes := make([]byte, count+2)
 
 	if _, err := io.ReadFull(byteStream, readBytes); err != nil {
 		return Value{}, fmt.Errorf("failed to read bulk string contents: %s", err)
 	}
 
 	return Value{
-		typ: BulkString,
+		typ:   BulkString,
 		bytes: readBytes[:count],
 	}, nil
 }
@@ -120,7 +120,7 @@ func decodeArray(byteStream *bufio.Reader) (Value, error) {
 	}
 
 	return Value{
-		typ: Array,
+		typ:   Array,
 		array: array,
 	}, nil
 }
@@ -136,28 +136,10 @@ func readUntilCRLF(byteStream *bufio.Reader) ([]byte, error) {
 		}
 
 		readBytes = append(readBytes, b...)
-		if len(readBytes) >= 2 && readBytes[len(readBytes) - 2] == '\r' {
+		if len(readBytes) >= 2 && readBytes[len(readBytes)-2] == '\r' {
 			break
 		}
 	}
 
-	return readBytes[:len(readBytes) - 1], nil
+	return readBytes[:len(readBytes)-1], nil
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
