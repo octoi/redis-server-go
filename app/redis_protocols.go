@@ -141,5 +141,5 @@ func readUntilCRLF(byteStream *bufio.Reader) ([]byte, error) {
 		}
 	}
 
-	return readBytes[:len(readBytes)-1], nil
+	return readBytes[:len(readBytes)-2], nil
 }
