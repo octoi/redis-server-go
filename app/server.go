@@ -63,7 +63,7 @@ func handleConnection(conn net.Conn, storage *Storage) {
 						expiryInMilliseconds, err := strconv.Atoi(expiryStr)
 						
 						if err != nil {
-							conn.Write([]byte(fmt.Sprintf("-ERR PX value (%s) is not an integer")))
+							conn.Write([]byte(fmt.Sprintf("-ERR PX value (%s) is not an integer\r\n", expiryStr)))
 							break
 						}
 
