@@ -36,3 +36,4 @@ Note: This section is for stages 2 and beyond.
 # Resources
 - [Sending commands to a Redis server](https://redis.io/docs/reference/protocol-spec/#send-commands-to-a-redis-server) 
 - [SET](https://redis.io/commands/set/) & [GET](https://redis.io/commands/get/) 
+- [RESP bulk string](https://redis.io/docs/reference/protocol-spec/#resp-bulk-strings)
